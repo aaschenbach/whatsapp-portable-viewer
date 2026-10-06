@@ -1,5 +1,11 @@
 # WhatsApp Portable Viewer (guia em português)
 
+[![Licença: MIT](https://img.shields.io/badge/Licen%C3%A7a-MIT-green.svg)](LICENSE)
+[![Python](https://img.shields.io/badge/Python-≥3.14-blue.svg)](https://www.python.org/)
+[![uv](https://img.shields.io/badge/gerenciado%20com-uv-7C3AED.svg)](https://docs.astral.sh/uv/)
+[![Plataforma](https://img.shields.io/badge/plataforma-Windows%20%7C%20macOS%20%7C%20Linux-lightgrey.svg)](#resumo-em-6-passos)
+[![Idioma](https://img.shields.io/badge/interface-pt--BR%20%7C%20en-orange.svg)](README.md#language)
+
 Transforme o backup do seu **WhatsApp** ou **WhatsApp Business** (Android) em um **visualizador offline**, parecido
 com o WhatsApp Web, que abre de um **pendrive** com duplo clique: sem internet, sem instalar nada no computador que
 vai abrir e sem depender de ninguém.

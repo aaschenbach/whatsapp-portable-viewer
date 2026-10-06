@@ -545,6 +545,8 @@ def main() -> None:
                         help="Copia a pasta Media para dentro da saída")
     parser.add_argument("--strict", action="store_true",
                         help="Termina com erro (código 2) se alguma mídia ficar sem arquivo")
+    parser.add_argument("--lang", default="pt-BR", choices=["pt-BR", "en"],
+                        help="Idioma da interface do visualizador (padrão: pt-BR)")
     args = parser.parse_args()
 
     contact_files = list(args.contacts)
@@ -672,7 +674,15 @@ def main() -> None:
 
     for item in WEB_DIR.iterdir():
         if item.is_file():
-            shutil.copy2(item, args.out / item.name)
+            if item.name == "index.html" and args.lang != "pt-BR":
+                html = item.read_text(encoding="utf-8")
+                html = html.replace(
+                    '<script src="app.js"></script>',
+                    f'<script>window.LANG="{args.lang}";</script>\n<script src="app.js"></script>',
+                )
+                (args.out / item.name).write_text(html, encoding="utf-8")
+            else:
+                shutil.copy2(item, args.out / item.name)
     if resolver is not None and args.copy_media:
         source = media_base / "Media"
         if source.is_dir():

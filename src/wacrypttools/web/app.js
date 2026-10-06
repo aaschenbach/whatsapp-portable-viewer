@@ -5,6 +5,248 @@
   var PALETTE = ["#00a884", "#53bdeb", "#e26ab6", "#d9822b", "#7f66ff", "#e0445a", "#4c9a2a", "#c2a000", "#5b8def", "#b5651d"];
   var PAGE = 120;
 
+  // ---------- i18n ----------
+  var STRINGS = {
+    "pt-BR": {
+      noData: "Pasta 'data' não encontrada. Mantenha index.html e a pasta data juntos.",
+      emptyInfo: function(chats, messages) { return chats + " conversas e " + messages + " mensagens. Selecione uma conversa à esquerda."; },
+      noChats: "Nenhuma conversa encontrada.",
+      loading: "Carregando...",
+      loadError: function(id) { return "Não foi possível carregar data/chat_" + id + ".js."; },
+      fulltextLoading: "Carregando índice de mensagens...",
+      fulltextError: "Não foi possível carregar data/fulltext.js.",
+      fulltextMin: "Digite ao menos 2 caracteres para pesquisar nas mensagens.",
+      resultsHead: function(n, capped) { return n + " resultado(s)" + (capped ? " (mostrando 500)" : ""); },
+      youPrefix: "Você: ",
+      you: "Você",
+      mediaMissing: function(label) { return label + " não disponível (arquivo não encontrado na pasta Media)"; },
+      unavailable: "Arquivo não disponível neste backup",
+      docOpen: "Abrir",
+      locationLabel: "Localização",
+      adLabel: "Conversa iniciada por anúncio",
+      adLink: "Ver anúncio (requer internet)",
+      callVideo: "Chamada de vídeo",
+      callVoice: "Chamada de voz",
+      callNoAnswer: " sem resposta",
+      callMissed: " perdida",
+      pollLabel: "Enquete",
+      votes: function(n) { return n + " voto(s)"; },
+      contactLabel: "Contato: ",
+      deleted: "Esta mensagem foi apagada",
+      sysDefault: "Aviso do sistema",
+      mediaLabel: "Mídia",
+      edited: "editada",
+      quotedMedia: "Mídia",
+      chatSub: function(isGroup, phone, count) { return (isGroup ? "Grupo · " : (phone ? "+" + phone + " · " : "")) + count + " mensagens"; },
+      exportPdfTitle: "Exportar conversas em PDF",
+      exportTxtTitle: "Exportar conversas em Texto",
+      exportPdfNotice: "Áudio não é exportado. Imagens são incluídas se disponíveis na pasta Media.",
+      exportTxtNotice: "Áudio e imagens não são exportados. Apenas texto.",
+      exportCount: function(n) { return n + " selecionada(s)"; },
+      exportLoadError: function(title) { return "Conversa: " + title + "\n[Erro ao carregar mensagens]"; },
+      popupBlocked: "Por favor, permita popups para este site para gerar o PDF.",
+      txtConversation: "Conversa: ",
+      txtPhone: "Telefone: ",
+      txtTotal: "Total de mensagens: ",
+      txtExported: function(d) { return "Exportado em: " + d; },
+      txtSystem: "[Sistema] ",
+      txtImgNA: "[Imagem - arquivo não disponível]",
+      txtImg: "[Imagem]",
+      txtVideo: "[Vídeo]",
+      txtAudio: "[Áudio - não exportado]",
+      txtSticker: "[Figurinha]",
+      txtDoc: function(n) { return "[Documento: " + n + "]"; },
+      txtLocation: function(pl) { return "[Localização" + (pl ? ": " + pl : "") + "]"; },
+      txtCallVideo: "[Chamada de vídeo]",
+      txtCallVoice: "[Chamada de voz]",
+      txtPoll: function(x) { return "[Enquete: " + x + "]"; },
+      txtContact: function(x) { return "[Contato: " + x + "]"; },
+      txtDeleted: "[Mensagem apagada]",
+      txtReply: function(x) { return "[Respondendo: " + x + "]"; },
+      kindImg: "Imagem", kindVideo: "Vídeo", kindAudio: "Áudio", kindDoc: "Documento",
+      kindGif: "GIF", kindSticker: "Figurinha",
+      pdfLang: "pt-BR",
+      pdfTitle: "Backup WhatsApp Business",
+      pdfDocLabel: "Documento: ",
+      pdfLocationLabel: "Localização",
+      pdfCallVideo: "Chamada de vídeo",
+      pdfCallVoice: "Chamada de voz",
+      pdfPoll: "<b>Enquete:</b> ",
+      pdfContact: "Contato: ",
+      pdfAudioNote: "[Áudio — não exportado]",
+      matchCount: function(pos, total) { return (pos + 1) + " de " + total; },
+      noMatches: "0 resultados",
+      dateLocale: "pt-BR",
+    },
+    "en": {
+      noData: "Folder 'data' not found. Keep index.html and the data folder together.",
+      emptyInfo: function(chats, messages) { return chats + " chats and " + messages + " messages. Select a chat on the left."; },
+      noChats: "No chats found.",
+      loading: "Loading...",
+      loadError: function(id) { return "Could not load data/chat_" + id + ".js."; },
+      fulltextLoading: "Loading message index...",
+      fulltextError: "Could not load data/fulltext.js.",
+      fulltextMin: "Type at least 2 characters to search messages.",
+      resultsHead: function(n, capped) { return n + " result(s)" + (capped ? " (showing 500)" : ""); },
+      youPrefix: "You: ",
+      you: "You",
+      mediaMissing: function(label) { return label + " unavailable (file not found in Media folder)"; },
+      unavailable: "File not available in this backup",
+      docOpen: "Open",
+      locationLabel: "Location",
+      adLabel: "Conversation started from ad",
+      adLink: "View ad (requires internet)",
+      callVideo: "Video call",
+      callVoice: "Voice call",
+      callNoAnswer: " no answer",
+      callMissed: " missed",
+      pollLabel: "Poll",
+      votes: function(n) { return n + " vote(s)"; },
+      contactLabel: "Contact: ",
+      deleted: "This message was deleted",
+      sysDefault: "System notice",
+      mediaLabel: "Media",
+      edited: "edited",
+      quotedMedia: "Media",
+      chatSub: function(isGroup, phone, count) { return (isGroup ? "Group · " : (phone ? "+" + phone + " · " : "")) + count + " messages"; },
+      exportPdfTitle: "Export chats as PDF",
+      exportTxtTitle: "Export chats as Text",
+      exportPdfNotice: "Audio is not exported. Images are included if available in the Media folder.",
+      exportTxtNotice: "Audio and images are not exported. Text only.",
+      exportCount: function(n) { return n + " selected"; },
+      exportLoadError: function(title) { return "Chat: " + title + "\n[Error loading messages]"; },
+      popupBlocked: "Please allow pop-ups for this site to generate the PDF.",
+      txtConversation: "Chat: ",
+      txtPhone: "Phone: ",
+      txtTotal: "Total messages: ",
+      txtExported: function(d) { return "Exported at: " + d; },
+      txtSystem: "[System] ",
+      txtImgNA: "[Image - file not available]",
+      txtImg: "[Image]",
+      txtVideo: "[Video]",
+      txtAudio: "[Audio - not exported]",
+      txtSticker: "[Sticker]",
+      txtDoc: function(n) { return "[Document: " + n + "]"; },
+      txtLocation: function(pl) { return "[Location" + (pl ? ": " + pl : "") + "]"; },
+      txtCallVideo: "[Video call]",
+      txtCallVoice: "[Voice call]",
+      txtPoll: function(x) { return "[Poll: " + x + "]"; },
+      txtContact: function(x) { return "[Contact: " + x + "]"; },
+      txtDeleted: "[Message deleted]",
+      txtReply: function(x) { return "[Replying to: " + x + "]"; },
+      kindImg: "Image", kindVideo: "Video", kindAudio: "Audio", kindDoc: "Document",
+      kindGif: "GIF", kindSticker: "Sticker",
+      pdfLang: "en",
+      pdfTitle: "WhatsApp Backup",
+      pdfDocLabel: "Document: ",
+      pdfLocationLabel: "Location",
+      pdfCallVideo: "Video call",
+      pdfCallVoice: "Voice call",
+      pdfPoll: "<b>Poll:</b> ",
+      pdfContact: "Contact: ",
+      pdfAudioNote: "[Audio — not exported]",
+      matchCount: function(pos, total) { return (pos + 1) + " of " + total; },
+      noMatches: "0 results",
+      dateLocale: "en-US",
+    }
+  };
+  var L = STRINGS[window.LANG] || STRINGS["pt-BR"];
+
+  // ---------- apply HTML i18n ----------
+  (function applyI18nHtml() {
+    if ((window.LANG || "pt-BR") === "pt-BR") return;
+    var EN_HTML = {
+      "themeBtn":       { title: "Toggle theme", "aria-label": "Toggle theme" },
+      "menuBtn":        { title: "Menu", "aria-label": "Menu" },
+      "menuExportPdf":  { text: "Export chats as PDF" },
+      "menuExportTxt":  { text: "Export chats as Text" },
+      "menuInstall":    { text: "Install on computer" },
+      "q":              { placeholder: "Search by name, phone or text" },
+      "searchBtn":      { title: "Search in chat", "aria-label": "Search in chat" },
+      "exportModalClose": { "aria-label": "Close" },
+      "exportSelectAll":  { text: "Select all" },
+      "exportClearAll":   { text: "Clear selection" },
+      "exportCancel":     { text: "Cancel" },
+      "exportConfirm":    { text: "Export" },
+      "exportQ":          { placeholder: "Filter chats..." },
+      "installModalClose":{ "aria-label": "Close" },
+      "installCancel":    { text: "Close" },
+      "lbClose":          { "aria-label": "Close" },
+      "lbPrev":           { "aria-label": "Previous" },
+      "lbNext":           { "aria-label": "Next" },
+      "cqUp":             { "aria-label": "Previous" },
+      "cqDown":           { "aria-label": "Next" },
+      "cqClose":          { "aria-label": "Close" },
+      "backBtn":          { "aria-label": "Back" },
+    };
+    Object.keys(EN_HTML).forEach(function(id) {
+      var el = document.getElementById(id);
+      if (!el) return;
+      var cfg = EN_HTML[id];
+      if (cfg.text !== undefined) {
+        var svg = el.querySelector("svg");
+        el.childNodes.forEach(function(n) { if (n.nodeType === 3) n.textContent = ""; });
+        if (svg) el.insertBefore(document.createTextNode(" " + cfg.text), svg.nextSibling);
+        else el.textContent = cfg.text;
+      }
+      if (cfg.title) el.title = cfg.title;
+      if (cfg["aria-label"]) el.setAttribute("aria-label", cfg["aria-label"]);
+      if (cfg.placeholder) el.placeholder = cfg.placeholder;
+    });
+    // tabs
+    var tabBtns = document.querySelectorAll("#tabs button");
+    var tabLabels = ["Chats", "Messages"];
+    tabBtns.forEach(function(b, i) { if (tabLabels[i]) b.textContent = tabLabels[i]; });
+    // filters
+    var filterBtns = document.querySelectorAll("#filters button");
+    var filterLabels = ["All", "Groups", "Direct", "With media"];
+    filterBtns.forEach(function(b, i) { if (filterLabels[i]) b.textContent = filterLabels[i]; });
+    // sort bar
+    var sortLabel = document.querySelector("#sortBar .sort-label");
+    if (sortLabel) sortLabel.textContent = "Sort: ";
+    var sortBtns = document.querySelectorAll("#sortBar button");
+    var sortData = [
+      { title: "Newest first", text: "Date ↓" },
+      { title: "Oldest first", text: "Date ↑" },
+      { title: "Name A→Z",    text: "Name" }
+    ];
+    sortBtns.forEach(function(b, i) {
+      if (sortData[i]) { b.title = sortData[i].title; b.textContent = sortData[i].text; }
+    });
+    // empty panel
+    var h2 = document.querySelector("#empty h2");
+    if (h2) h2.textContent = "WhatsApp Backup";
+    var emptyInfo = document.getElementById("emptyInfo");
+    // emptyInfo text is set later by JS after CHATS loads
+    var muted = document.querySelector("#empty .muted");
+    if (muted) muted.textContent = "Read-only. Works offline.";
+    // chat footer
+    var footer = document.querySelector("#chat footer");
+    if (footer) footer.textContent = "Read-only backup";
+    // search in chat placeholder
+    var cq = document.getElementById("cq");
+    if (cq) cq.placeholder = "Search in this chat";
+    // install modal title
+    var installTitle = document.querySelector("#installModal .modal-head span");
+    if (installTitle) installTitle.textContent = "Install on computer";
+    // date btn aria
+    var dateBtn = document.querySelector(".date-btn");
+    if (dateBtn) { dateBtn.title = "Go to date"; dateBtn.setAttribute("aria-label", "Go to date"); }
+    // brand
+    var brand = document.querySelector(".brand");
+    if (brand) brand.textContent = "WhatsApp Backup";
+    document.title = "WhatsApp Backup";
+    // install OS tabs
+    var osTabs = document.querySelectorAll(".install-os-tab");
+    // labels stay (Windows/macOS/Linux are the same in English)
+    // install advanced summaries
+    document.querySelectorAll(".install-advanced summary").forEach(function(s) {
+      s.textContent = "Advanced: install automatically with a script";
+    });
+    // install tips and steps are in pt-BR but are detailed OS instructions —
+    // the full English install guide is in README.md
+  })();
+
   // ---------- util ----------
   function fold(str) {
     return String(str).toLowerCase().normalize("NFD").replace(/\p{M}/gu, "");
@@ -41,7 +283,7 @@
   function fmtTime(ts) { var d = new Date(ts); return pad(d.getHours()) + ":" + pad(d.getMinutes()); }
   function fmtShortDate(ts) { var d = new Date(ts); return pad(d.getDate()) + "/" + pad(d.getMonth() + 1) + "/" + d.getFullYear(); }
   function fmtLongDate(ts) {
-    return new Date(ts).toLocaleDateString("pt-BR", { day: "numeric", month: "long", year: "numeric" });
+    return new Date(ts).toLocaleDateString(L.dateLocale, { day: "numeric", month: "long", year: "numeric" });
   }
   function dayKey(ts) { var d = new Date(ts); return d.getFullYear() * 10000 + (d.getMonth() + 1) * 100 + d.getDate(); }
   function fmtSize(n) {
@@ -125,13 +367,13 @@
   // ---------- state ----------
   var CHATS = window.CHATS;
   if (!CHATS) {
-    $("emptyInfo").textContent = "Pasta 'data' não encontrada. Mantenha index.html e a pasta data juntos.";
+    $("emptyInfo").textContent = L.noData;
     return;
   }
   var META = window.META || {};
   var chatById = {};
   CHATS.forEach(function (c) { c.lastNorm = null; chatById[c.id] = c; });
-  $("emptyInfo").textContent = (META.chats || CHATS.length) + " conversas e " + (META.messages || "") + " mensagens. Selecione uma conversa à esquerda.";
+  $("emptyInfo").textContent = L.emptyInfo(META.chats || CHATS.length, META.messages || "");
 
   var state = { tab: "chats", filter: "all", sort: "date-desc", query: "", current: null };
   var cache = {}, cacheOrder = [];
@@ -190,7 +432,7 @@
       top.appendChild(title);
       top.appendChild(h("div", "item-time", fmtShortDate(c.lastTs)));
       body.appendChild(top);
-      body.appendChild(h("div", "item-prev", (c.lastMe ? "Você: " : "") + c.lastText));
+      body.appendChild(h("div", "item-prev", (c.lastMe ? L.youPrefix : "") + c.lastText));
       item.appendChild(av);
       item.appendChild(body);
       frag.appendChild(item);
@@ -206,12 +448,12 @@
     if (state.sort === "date-asc") {
       listData.sort(function (a, b) { return a.lastTs - b.lastTs; });
     } else if (state.sort === "name-asc") {
-      listData.sort(function (a, b) { return a.title.localeCompare(b.title, "pt-BR", { sensitivity: "base" }); });
+      listData.sort(function (a, b) { return a.title.localeCompare(b.title, L.dateLocale, { sensitivity: "base" }); });
     }
     // date-desc: ordem original do CHATS (já ordenado por lastTs desc no builder)
     listEl.innerHTML = "";
     listShown = 0;
-    if (!listData.length) { listEl.appendChild(h("div", "note", "Nenhuma conversa encontrada.")); return; }
+    if (!listData.length) { listEl.appendChild(h("div", "note", L.noChats)); return; }
     renderListBatch();
   }
   $("sortBar").addEventListener("click", function (e) {
@@ -234,7 +476,7 @@
   function ensureFulltext() {
     if (fulltext) return Promise.resolve();
     resultsEl.innerHTML = "";
-    resultsEl.appendChild(h("div", "note", "Carregando índice de mensagens..."));
+    resultsEl.appendChild(h("div", "note", L.fulltextLoading));
     return loadScript("data/fulltext.js").then(function () {
       fulltextFolded = new Array(fulltext.length);
       for (var i = 0; i < fulltext.length; i++) fulltextFolded[i] = fold(fulltext[i][3]);
@@ -246,7 +488,7 @@
     var seq = ++searchSeq;
     if (state.query.trim().length < 2) {
       resultsEl.innerHTML = "";
-      resultsEl.appendChild(h("div", "note", "Digite ao menos 2 caracteres para pesquisar nas mensagens."));
+      resultsEl.appendChild(h("div", "note", L.fulltextMin));
       return;
     }
     ensureFulltext().then(function () {
@@ -259,7 +501,7 @@
       }
       hits.sort(function (a, b) { return fulltext[b][2] - fulltext[a][2]; });
       resultsEl.innerHTML = "";
-      resultsEl.appendChild(h("div", "res-head", hits.length + " resultado(s)" + (hits.length > 500 ? " (mostrando 500)" : "")));
+      resultsEl.appendChild(h("div", "res-head", L.resultsHead(hits.length, hits.length > 500)));
       var frag = document.createDocumentFragment();
       hits.slice(0, 500).forEach(function (idx) {
         var entry = fulltext[idx], chat = chatById[entry[0]];
@@ -286,7 +528,7 @@
       resultsEl.appendChild(frag);
     }).catch(function () {
       resultsEl.innerHTML = "";
-      resultsEl.appendChild(h("div", "note", "Não foi possível carregar data/fulltext.js."));
+      resultsEl.appendChild(h("div", "note", L.fulltextError));
     });
   }
   resultsEl.addEventListener("click", function (e) {
@@ -325,10 +567,10 @@
   // ---------- chat view ----------
   var msgsEl = $("messages");
 
-  function mediaMissing(label) { return h("div", "missing", label + " não disponível (arquivo não encontrado na pasta Media)"); }
+  function mediaMissing(label) { return h("div", "missing", L.mediaMissing(label)); }
 
   var MEDIA_KINDS = ["i", "v", "a", "d", "g", "s"];
-  var KIND_LABEL = { i: "Imagem", v: "Vídeo", a: "Áudio", d: "Documento", g: "GIF", s: "Figurinha" };
+  var KIND_LABEL = { i: L.kindImg, v: L.kindVideo, a: L.kindAudio, d: L.kindDoc, g: L.kindGif, s: L.kindSticker };
 
   function unavailable(m) {
     var card = h("div", "na");
@@ -339,7 +581,7 @@
     if (m.sz) details.push(fmtSize(m.sz));
     if (m.d) details.push(fmtDur(m.d));
     if (details.length) card.appendChild(h("div", "na-meta", details.join(" · ")));
-    card.appendChild(h("div", "na-why", "Arquivo não disponível neste backup"));
+    card.appendChild(h("div", "na-why", L.unavailable));
     return card;
   }
 
@@ -347,7 +589,7 @@
     var row = h("div", "row");
     row.dataset.idx = index;
     var bubble = h("div", "bubble ad-card");
-    bubble.appendChild(h("div", "ad-label", "Conversa iniciada por anúncio"));
+    bubble.appendChild(h("div", "ad-label", L.adLabel));
     if (m.ad.th) {
       var th = h("img", "ad-thumb");
       th.src = m.ad.th; th.alt = "";
@@ -361,7 +603,7 @@
       bubble.appendChild(body);
     }
     if (/^https?:\/\//.test(m.ad.u || "")) {
-      var link = h("a", "ad-link", "Ver anúncio (requer internet)");
+      var link = h("a", "ad-link", L.adLink);
       link.href = m.ad.u; link.target = "_blank"; link.rel = "noopener noreferrer";
       bubble.appendChild(link);
     }
@@ -409,7 +651,7 @@
       var info = h("div", "info");
       info.appendChild(h("div", "name", name));
       info.appendChild(h("div", "size", fmtSize(m.sz)));
-      var link = h("a", null, "Abrir");
+      var link = h("a", null, L.docOpen);
       link.href = url; link.target = "_blank"; link.rel = "noopener";
       info.appendChild(link);
       doc.appendChild(h("div", "ext", ext));
@@ -420,7 +662,7 @@
     }
     if (m.y === "l") {
       var loc = h("div", "loc");
-      loc.appendChild(h("div", null, "Localização" + (m.pl ? ": " + m.pl : "")));
+      loc.appendChild(h("div", null, L.locationLabel + (m.pl ? ": " + m.pl : "")));
       if (m.lat != null) {
         var ml = h("a", null, m.lat + ", " + m.lng);
         ml.href = "https://www.openstreetmap.org/?mlat=" + m.lat + "&mlon=" + m.lng + "#map=16/" + m.lat + "/" + m.lng;
@@ -430,21 +672,21 @@
       wrap.appendChild(loc);
     }
     if (m.y === "k") {
-      var label = (m.cv ? "Chamada de vídeo" : "Chamada de voz") + (m.cd ? " (" + fmtDur(m.cd) + ")" : (m.m ? " sem resposta" : " perdida"));
+      var label = (m.cv ? L.callVideo : L.callVoice) + (m.cd ? " (" + fmtDur(m.cd) + ")" : (m.m ? L.callNoAnswer : L.callMissed));
       wrap.appendChild(h("div", null, label));
     }
     if (m.y === "p") {
-      wrap.appendChild(h("div", "sender", "Enquete" + (m.x ? ": " + m.x : "")));
+      wrap.appendChild(h("div", "sender", L.pollLabel + (m.x ? ": " + m.x : "")));
       (m.o || []).forEach(function (o) {
         var row = h("div", "poll-opt");
         row.appendChild(h("span", null, o[0]));
-        row.appendChild(h("span", "muted", o[1] + " voto(s)"));
+        row.appendChild(h("span", "muted", L.votes(o[1])));
         wrap.appendChild(row);
       });
     } else if (m.y === "c") {
-      wrap.appendChild(h("div", null, "Contato: " + (m.x || "")));
+      wrap.appendChild(h("div", null, L.contactLabel + (m.x || "")));
     } else if (m.y === "del") {
-      wrap.appendChild(h("div", "deleted", "Esta mensagem foi apagada"));
+      wrap.appendChild(h("div", "deleted", L.deleted));
     } else if (m.x && m.y !== "l" && m.y !== "k") {
       var t = h("div", "text");
       t.appendChild(formatText(m.x, tokens));
@@ -458,7 +700,7 @@
     if (m.y === "x") {
       var sys = h("div", "sys");
       sys.dataset.idx = index;
-      sys.appendChild(h("span", null, m.x || "Aviso do sistema"));
+      sys.appendChild(h("span", null, m.x || L.sysDefault));
       return sys;
     }
     var row = h("div", "row" + (m.m ? " me" : "") + (m.y === "s" ? " stk" : ""));
@@ -471,14 +713,14 @@
     }
     if (m.q) {
       var q = h("div", "quote");
-      q.appendChild(h("div", "qs", m.q.m ? "Você" : (m.q.s || "")));
-      q.appendChild(h("div", "qt", m.q.x || "Mídia"));
+      q.appendChild(h("div", "qs", m.q.m ? L.you : (m.q.s || "")));
+      q.appendChild(h("div", "qt", m.q.x || L.quotedMedia));
       bubble.appendChild(q);
     }
     bubble.appendChild(buildBody(m, cur ? cur.tokens : []));
     var meta = h("div", "meta");
     if (m.st) meta.appendChild(h("span", null, "★"));
-    if (m.e) meta.appendChild(h("span", null, "editada"));
+    if (m.e) meta.appendChild(h("span", null, L.edited));
     meta.appendChild(h("span", null, fmtTime(m.t)));
     bubble.appendChild(meta);
     row.appendChild(bubble);
@@ -563,14 +805,14 @@
     $("empty").hidden = true;
     $("chat").hidden = false;
     $("chatTitle").textContent = chat.title;
-    $("chatSub").textContent = (chat.isGroup ? "Grupo · " : (chat.phone ? "+" + chat.phone + " · " : "")) + chat.count + " mensagens";
+    $("chatSub").textContent = L.chatSub(chat.isGroup, chat.phone, chat.count);
     avatar($("chatAvatar"), chat);
     Array.prototype.forEach.call(listEl.querySelectorAll(".item"), function (el) {
       el.classList.toggle("on", Number(el.dataset.id) === id);
     });
     closeChatSearch();
     msgsEl.innerHTML = "";
-    msgsEl.appendChild(h("div", "note", "Carregando..."));
+    msgsEl.appendChild(h("div", "note", L.loading));
     var ready = cache[id] ? Promise.resolve() : loadScript("data/chat_" + id + ".js");
     ready.then(function () {
       if (state.current !== id) return;
@@ -592,7 +834,7 @@
       }
     }).catch(function () {
       msgsEl.innerHTML = "";
-      msgsEl.appendChild(h("div", "note", "Não foi possível carregar data/chat_" + id + ".js."));
+      msgsEl.appendChild(h("div", "note", L.loadError(id)));
     });
   }
 
@@ -640,7 +882,7 @@
       }
       cur.matchPos = start;
     }
-    $("cqCount").textContent = cur.tokens.length ? (total ? (cur.matchPos + 1) + " de " + total : "0 resultados") : "";
+    $("cqCount").textContent = cur.tokens.length ? (total ? L.matchCount(cur.matchPos, total) : L.noMatches) : "";
     var idx = cur.matchPos >= 0 ? cur.matches[cur.matchPos] : null;
     if (idx != null) {
       if (idx < cur.start || idx >= cur.end) renderWindow(idx - PAGE / 2, idx + PAGE / 2);
@@ -657,7 +899,7 @@
     var idx = cur.matches[cur.matchPos];
     gotoIndex(idx, false);
     markCurrent(idx);
-    $("cqCount").textContent = (cur.matchPos + 1) + " de " + cur.matches.length;
+    $("cqCount").textContent = L.matchCount(cur.matchPos, cur.matches.length);
   }
   $("searchBtn").addEventListener("click", function () {
     var bar = $("chatSearch");
@@ -747,13 +989,13 @@
     closeMenu();
     exportMode = mode;
     exportSelected = {};
-    var title = mode === "pdf" ? "Exportar conversas em PDF" : "Exportar conversas em Texto";
+    var title = mode === "pdf" ? L.exportPdfTitle : L.exportTxtTitle;
     $("exportModalTitle").textContent = title;
     var notice = $("exportNotice");
     if (mode === "pdf") {
-      notice.textContent = "Áudio não é exportado. Imagens são incluídas se disponíveis na pasta Media.";
+      notice.textContent = L.exportPdfNotice;
     } else {
-      notice.textContent = "Áudio e imagens não são exportados. Apenas texto.";
+      notice.textContent = L.exportTxtNotice;
     }
     notice.classList.add("visible");
     $("exportQ").value = "";
@@ -786,7 +1028,7 @@
       var info = h("div", null);
       info.style.minWidth = "0"; info.style.flex = "1";
       info.appendChild(h("div", "item-title", c.title));
-      info.appendChild(h("div", "item-sub", c.count + " mensagens"));
+      info.appendChild(h("div", "item-sub", L.chatSub(c.isGroup, c.phone, c.count)));
       row.appendChild(cb);
       row.appendChild(av);
       row.appendChild(info);
@@ -797,7 +1039,7 @@
 
   function updateExportCount() {
     var n = Object.keys(exportSelected).length;
-    $("exportCount").textContent = n ? n + " selecionada(s)" : "";
+    $("exportCount").textContent = n ? L.exportCount(n) : "";
     $("exportConfirm").disabled = n === 0;
   }
 
@@ -835,31 +1077,31 @@
 
   // ---------- exportar TXT ----------
   function chatMsgsText(chat, msgs) {
-    var lines = ["Conversa: " + chat.title];
-    if (chat.phone) lines.push("Telefone: +" + chat.phone);
-    lines.push("Total de mensagens: " + chat.count);
-    lines.push("Exportado em: " + new Date().toLocaleString("pt-BR"));
+    var lines = [L.txtConversation + chat.title];
+    if (chat.phone) lines.push(L.txtPhone + "+" + chat.phone);
+    lines.push(L.txtTotal + chat.count);
+    lines.push(L.txtExported(new Date().toLocaleString(L.dateLocale)));
     lines.push("---");
     var prevDay = null;
     msgs.forEach(function (m) {
-      if (m.y === "x") { if (m.x) lines.push("[Sistema] " + m.x); return; }
+      if (m.y === "x") { if (m.x) lines.push(L.txtSystem + m.x); return; }
       var dk = dayKey(m.t);
       if (dk !== prevDay) { lines.push(""); lines.push("=== " + fmtLongDate(m.t) + " ==="); prevDay = dk; }
-      var who = m.m ? "Você" : (m.s || chat.title);
+      var who = m.m ? L.you : (m.s || chat.title);
       var time = fmtTime(m.t);
       var content = "";
-      if (m.y === "i") content = "[Imagem" + (m.nf ? " - arquivo não disponível" : "") + "]";
-      else if (m.y === "v" || m.y === "g") content = "[Vídeo]";
-      else if (m.y === "a") content = "[Áudio - não exportado]";
-      else if (m.y === "s") content = "[Figurinha]";
-      else if (m.y === "d") content = "[Documento: " + (m.n || (m.f ? m.f.split("/").pop() : "")) + "]";
-      else if (m.y === "l") content = "[Localização" + (m.pl ? ": " + m.pl : "") + "]";
-      else if (m.y === "k") content = (m.cv ? "[Chamada de vídeo]" : "[Chamada de voz]");
-      else if (m.y === "p") content = "[Enquete: " + (m.x || "") + "]";
-      else if (m.y === "c") content = "[Contato: " + (m.x || "") + "]";
-      else if (m.y === "del") content = "[Mensagem apagada]";
+      if (m.y === "i") content = m.nf ? L.txtImgNA : L.txtImg;
+      else if (m.y === "v" || m.y === "g") content = L.txtVideo;
+      else if (m.y === "a") content = L.txtAudio;
+      else if (m.y === "s") content = L.txtSticker;
+      else if (m.y === "d") content = L.txtDoc(m.n || (m.f ? m.f.split("/").pop() : ""));
+      else if (m.y === "l") content = L.txtLocation(m.pl);
+      else if (m.y === "k") content = (m.cv ? L.txtCallVideo : L.txtCallVoice);
+      else if (m.y === "p") content = L.txtPoll(m.x || "");
+      else if (m.y === "c") content = L.txtContact(m.x || "");
+      else if (m.y === "del") content = L.txtDeleted;
       else content = m.x || "";
-      if (m.q) content = "[Respondendo: " + (m.q.x || "Mídia") + "]\n" + content;
+      if (m.q) content = L.txtReply(m.q.x || L.quotedMedia) + "\n" + content;
       lines.push("[" + time + "] " + who + ": " + content);
     });
     return lines.join("\n");
@@ -889,7 +1131,7 @@
       }
       if (cache[id]) { go(); return; }
       loadScript("data/chat_" + id + ".js").then(go).catch(function () {
-        parts.push("Conversa: " + chat.title + "\n[Erro ao carregar mensagens]");
+        parts.push(L.exportLoadError(chat.title));
         processNext();
       });
     }
@@ -918,7 +1160,7 @@
 
   function generatePdf(allData) {
     var win = window.open("", "_blank");
-    if (!win) { alert("Por favor, permita popups para este site para gerar o PDF."); return; }
+    if (!win) { alert(L.popupBlocked); return; }
     var html = buildPdfHtml(allData);
     win.document.write(html);
     win.document.close();
@@ -928,8 +1170,8 @@
   }
 
   function buildPdfHtml(allData) {
-    var parts = ['<!doctype html><html lang="pt-BR"><head><meta charset="utf-8">',
-      '<title>Backup WhatsApp Business</title>',
+    var parts = ['<!doctype html><html lang="' + L.pdfLang + '"><head><meta charset="utf-8">',
+      '<title>' + L.pdfTitle + '</title>',
       '<style>',
       'body{font:13px/1.5 "Segoe UI",Arial,sans-serif;color:#111;margin:0;padding:0}',
       '.chat-section{page-break-after:always;padding:24px 32px}',
@@ -955,7 +1197,7 @@
       var chat = item.chat, msgs = item.msgs;
       parts.push('<div class="chat-section">');
       parts.push('<h1>' + esc(chat.title) + '</h1>');
-      var sub = (chat.phone ? "+" + chat.phone + " · " : "") + chat.count + " mensagens";
+      var sub = L.chatSub(chat.isGroup, chat.phone, chat.count);
       parts.push('<div class="sub">' + esc(sub) + '</div>');
       var prevDay = null;
       msgs.forEach(function (m) {
@@ -967,27 +1209,27 @@
         if (dk !== prevDay) { parts.push('<div class="day-sep">' + fmtLongDate(m.t) + '</div>'); prevDay = dk; }
         parts.push('<div class="row' + (m.m ? ' me' : '') + '"><div class="bubble">');
         if (m.s) parts.push('<div class="sender">' + esc(m.s) + '</div>');
-        if (m.q) parts.push('<div class="quote"><b>' + esc(m.q.m ? "Você" : (m.q.s || "")) + '</b><br>' + esc(m.q.x || "Mídia") + '</div>');
+        if (m.q) parts.push('<div class="quote"><b>' + esc(m.q.m ? L.you : (m.q.s || "")) + '</b><br>' + esc(m.q.x || L.quotedMedia) + '</div>');
         if (m.y === "i" && m.f && !m.nf) {
           parts.push('<img class="img-thumb" src="' + mediaUrl(m.f) + '" alt="" onerror="this.style.display=\'none\'">');
         } else if (m.y === "a") {
-          parts.push('<div class="media-note">[Áudio — não exportado]</div>');
+          parts.push('<div class="media-note">' + L.pdfAudioNote + '</div>');
         } else if (m.y === "v" || m.y === "g") {
-          parts.push('<div class="media-note">[Vídeo]</div>');
+          parts.push('<div class="media-note">[' + L.kindVideo + ']</div>');
         } else if (m.y === "s") {
-          parts.push('<div class="media-note">[Figurinha]</div>');
+          parts.push('<div class="media-note">[' + L.kindSticker + ']</div>');
         } else if (m.y === "d") {
-          parts.push('<div class="doc-box">Documento: ' + esc(m.n || (m.f ? m.f.split("/").pop() : "")) + '</div>');
+          parts.push('<div class="doc-box">' + L.pdfDocLabel + esc(m.n || (m.f ? m.f.split("/").pop() : "")) + '</div>');
         } else if (m.y === "l") {
-          parts.push('<div class="media-note">Localização' + (m.pl ? ': ' + esc(m.pl) : '') + '</div>');
+          parts.push('<div class="media-note">' + L.pdfLocationLabel + (m.pl ? ': ' + esc(m.pl) : '') + '</div>');
         } else if (m.y === "k") {
-          parts.push('<div class="media-note">' + (m.cv ? 'Chamada de vídeo' : 'Chamada de voz') + '</div>');
+          parts.push('<div class="media-note">' + (m.cv ? L.pdfCallVideo : L.pdfCallVoice) + '</div>');
         } else if (m.y === "del") {
-          parts.push('<div class="media-note">[Mensagem apagada]</div>');
+          parts.push('<div class="media-note">' + L.txtDeleted + '</div>');
         } else if (m.y === "p") {
-          parts.push('<div><b>Enquete:</b> ' + esc(m.x || "") + '</div>');
+          parts.push('<div>' + L.pdfPoll + esc(m.x || "") + '</div>');
         } else if (m.y === "c") {
-          parts.push('<div>Contato: ' + esc(m.x || "") + '</div>');
+          parts.push('<div>' + L.pdfContact + esc(m.x || "") + '</div>');
         }
         if (m.x && ["t", "i", "v", "a", "g", "d", "s"].indexOf(m.y) !== -1) {
           parts.push('<div>' + esc(m.x) + '</div>');
