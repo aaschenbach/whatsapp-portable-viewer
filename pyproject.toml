@@ -1,0 +1,40 @@
+[project]
+name = "wacrypttools"
+version = "0.1.0"
+description = "Descriptografa backups do WhatsApp (crypt15) e gera um visualizador offline estilo WhatsApp para pendrive"
+readme = "README.md"
+authors = [
+    { name = "Alexandre Aschenbach", email = "108477213+aaschenbach@users.noreply.github.com" }
+]
+requires-python = ">=3.14"
+dependencies = [
+    "wa-crypt-tools[ocr]>=0.1.0",
+]
+
+[project.scripts]
+wacrypttools = "wacrypttools:main"
+
+[build-system]
+requires = ["uv_build>=0.12.17,<0.13.0"]
+build-backend = "uv_build"
+
+[tool.uv.sources]
+wa-crypt-tools = { git = "https://github.com/ElDavoo/wa-crypt-tools", rev = "e2c0282be6769898de7abd95c3f6208f11822f83" }
+
+[dependency-groups]
+dev = [
+    "pillow>=12.3.0",
+    "pytest>=9.1.1",
+    "ruff>=0.16.10",
+]
+
+[tool.ruff]
+line-length = 110
+target-version = "py314"
+
+[tool.ruff.lint]
+select = ["E", "F", "W", "I", "B", "UP"]
+ignore = ["E501", "B905"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]

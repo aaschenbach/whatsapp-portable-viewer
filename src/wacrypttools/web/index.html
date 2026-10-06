@@ -1,0 +1,247 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Backup WhatsApp Business</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<div id="app">
+  <aside id="side">
+    <header class="side-head">
+      <div class="brand">Backup WhatsApp Business</div>
+      <button id="themeBtn" class="icon-btn" title="Alternar tema" aria-label="Alternar tema">
+        <svg viewBox="0 0 24 24" width="22" height="22"><path fill="currentColor" d="M12 3a9 9 0 1 0 9 9c0-.5 0-.9-.1-1.4A5.5 5.5 0 0 1 13.4 3.1C13 3 12.5 3 12 3z"/></svg>
+      </button>
+      <button id="menuBtn" class="icon-btn" title="Menu" aria-label="Menu" aria-haspopup="true" aria-expanded="false">
+        <svg viewBox="0 0 24 24" width="22" height="22"><path fill="currentColor" d="M3 18h18v-2H3zm0-5h18v-2H3zm0-7v2h18V6z"/></svg>
+      </button>
+    </header>
+    <div id="menuDropdown" class="menu-dropdown" hidden>
+      <button id="menuExportPdf" class="menu-item">
+        <svg viewBox="0 0 24 24" width="18" height="18"><path fill="currentColor" d="M20 2H8a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V4a2 2 0 0 0-2-2zm-8.5 7.5c0 .83-.67 1.5-1.5 1.5H9v2H7.5V7H10c.83 0 1.5.67 1.5 1.5zm5 2c0 .83-.67 1.5-1.5 1.5h-2.5V7H15c.83 0 1.5.67 1.5 1.5zm4-3H19v1h1.5V11H19v2h-1.5V7h3zm-11.5 0H10v1H9zm5 0h1.5v3H14z"/></svg>
+        Exportar conversas em PDF
+      </button>
+      <button id="menuExportTxt" class="menu-item">
+        <svg viewBox="0 0 24 24" width="18" height="18"><path fill="currentColor" d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8zm-1 7H7V7h6zm4 4H7v-2h10zm0 4H7v-2h10z"/></svg>
+        Exportar conversas em Texto
+      </button>
+      <hr class="menu-sep">
+      <button id="menuInstall" class="menu-item">
+        <svg viewBox="0 0 24 24" width="18" height="18"><path fill="currentColor" d="M19 9h-4V3H9v6H5l7 7 7-7zm-8 2V5h2v6h1.17L12 13.17 9.83 11H11zm-6 8v2h14v-2H5z"/></svg>
+        Instalar no computador
+      </button>
+    </div>
+    <div class="search-wrap">
+      <input id="q" type="search" autocomplete="off" placeholder="Pesquisar por nome, telefone ou texto">
+    </div>
+    <div class="tabs" id="tabs">
+      <button data-tab="chats" class="on">Conversas</button>
+      <button data-tab="msgs">Mensagens</button>
+    </div>
+    <div class="filters" id="filters">
+      <button data-f="all" class="on">Todas</button>
+      <button data-f="groups">Grupos</button>
+      <button data-f="single">Individuais</button>
+      <button data-f="media">Com mídia</button>
+    </div>
+    <div class="sort-bar" id="sortBar">
+      <span class="sort-label">Ordenar:</span>
+      <button data-s="date-desc" class="on" title="Mais recentes primeiro">Data ↓</button>
+      <button data-s="date-asc" title="Mais antigas primeiro">Data ↑</button>
+      <button data-s="name-asc" title="Nome A→Z">Nome</button>
+    </div>
+    <div id="list" class="scroll"></div>
+    <div id="results" class="scroll" hidden></div>
+  </aside>
+
+  <main id="main">
+    <div id="empty">
+      <h2>Backup do WhatsApp Business</h2>
+      <p id="emptyInfo">Selecione uma conversa à esquerda.</p>
+      <p class="muted">Somente leitura. Funciona sem internet.</p>
+    </div>
+    <section id="chat" hidden>
+      <header class="chat-head">
+        <button id="backBtn" class="icon-btn back" aria-label="Voltar">
+          <svg viewBox="0 0 24 24" width="24" height="24"><path fill="currentColor" d="M20 11H7.8l5.6-5.6L12 4l-8 8 8 8 1.4-1.4L7.8 13H20z"/></svg>
+        </button>
+        <div id="chatAvatar" class="avatar"></div>
+        <div class="chat-titles">
+          <div id="chatTitle" class="chat-title"></div>
+          <div id="chatSub" class="chat-sub"></div>
+        </div>
+        <button id="searchBtn" class="icon-btn" title="Pesquisar na conversa" aria-label="Pesquisar na conversa">
+          <svg viewBox="0 0 24 24" width="22" height="22"><path fill="currentColor" d="M15.5 14h-.8l-.3-.3A6.5 6.5 0 1 0 14 15.5l.3.3v.8l5 5 1.5-1.5-5-5zm-6 0a4.5 4.5 0 1 1 0-9 4.5 4.5 0 0 1 0 9z"/></svg>
+        </button>
+        <label class="icon-btn date-btn" title="Ir para uma data" aria-label="Ir para uma data">
+          <svg viewBox="0 0 24 24" width="22" height="22"><path fill="currentColor" d="M19 4h-1V2h-2v2H8V2H6v2H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6a2 2 0 0 0-2-2zm0 16H5V10h14zM5 8V6h14v2z"/></svg>
+          <input id="dateInput" type="date">
+        </label>
+      </header>
+      <div id="chatSearch" class="chat-search" hidden>
+        <input id="cq" type="search" autocomplete="off" placeholder="Pesquisar nesta conversa">
+        <span id="cqCount" class="muted"></span>
+        <button id="cqUp" class="icon-btn" aria-label="Anterior">&#9650;</button>
+        <button id="cqDown" class="icon-btn" aria-label="Próxima">&#9660;</button>
+        <button id="cqClose" class="icon-btn" aria-label="Fechar">&#10005;</button>
+      </div>
+      <div id="messages"></div>
+      <footer class="ro">Backup somente leitura</footer>
+    </section>
+  </main>
+</div>
+
+<!-- Modal exportar PDF / TXT -->
+<div id="exportModal" class="modal-overlay" hidden>
+  <div class="modal-box">
+    <div class="modal-head">
+      <span id="exportModalTitle">Exportar conversas</span>
+      <button id="exportModalClose" class="icon-btn" aria-label="Fechar">&#10005;</button>
+    </div>
+    <div class="modal-notice" id="exportNotice"></div>
+    <div class="modal-search">
+      <input id="exportQ" type="search" autocomplete="off" placeholder="Filtrar conversas...">
+    </div>
+    <div class="modal-actions-top">
+      <button id="exportSelectAll" class="link-btn">Selecionar tudo</button>
+      <button id="exportClearAll" class="link-btn">Limpar seleção</button>
+      <span id="exportCount" class="muted"></span>
+    </div>
+    <div id="exportList" class="modal-list"></div>
+    <div class="modal-foot">
+      <button id="exportCancel" class="btn-ghost">Cancelar</button>
+      <button id="exportConfirm" class="btn-primary">Exportar</button>
+    </div>
+  </div>
+</div>
+
+<!-- Modal instalar -->
+<div id="installModal" class="modal-overlay" hidden>
+  <div class="modal-box modal-box--install">
+    <div class="modal-head">
+      <span>Instalar no computador</span>
+      <button id="installModalClose" class="icon-btn" aria-label="Fechar">&#10005;</button>
+    </div>
+    <div class="install-os-tabs">
+      <button class="install-os-tab on" data-os="win">
+        <svg viewBox="0 0 24 24" width="16" height="16"><path fill="currentColor" d="M3 5.6 10.5 4.5v7H3zm0 12.8 7.5 1.1v-6.9H3zm8.5 1.3L21 21v-8.4h-9.5zm0-15.4v7.1H21V3z"/></svg>
+        Windows
+      </button>
+      <button class="install-os-tab" data-os="mac">
+        <svg viewBox="0 0 24 24" width="16" height="16"><path fill="currentColor" d="M18.7 17.5c-.4.9-.8 1.7-1.5 2.6-.9 1.3-1.8 1.9-2.7 1.9-.7 0-1.4-.2-2.3-.6-.9-.4-1.7-.6-2.4-.6-.7 0-1.5.2-2.4.6-.9.4-1.6.6-2.1.6-1 0-2-.7-2.9-2C1.4 18.5 1 16.7 1 14.9c0-1.7.4-3.1 1.1-4.3.7-1 1.7-1.6 3-1.6.8 0 1.7.3 2.8.7.8.3 1.3.5 1.6.5.3 0 .8-.2 1.8-.5 1-.4 2-.6 2.9-.5 1.1.1 2 .4 2.7 1-.9.6-1.5 1.4-1.5 2.6 0 1 .4 1.9 1.1 2.6.4.4.8.6 1.2.8zm-5.3-14c0 .8-.3 1.5-.8 2.2-.6.8-1.4 1.3-2.2 1.2 0-.8.3-1.5.9-2.1.3-.3.6-.6 1.1-.8.4-.2.8-.3 1.1-.3z"/></svg>
+        macOS
+      </button>
+      <button class="install-os-tab" data-os="linux">
+        <svg viewBox="0 0 24 24" width="16" height="16"><path fill="currentColor" d="M12.5 2C9 2 8 5 8 5S5.5 5.5 5 8c-.4 1.8.5 3.5.5 3.5S4 13 4 15c0 2.5 2 4 4 4 .8 0 1.5-.2 2-.4l2 1.4 2-1.4c.5.2 1.2.4 2 .4 2 0 4-1.5 4-4 0-2-1.5-3.5-1.5-3.5S19.4 9.8 19 8c-.5-2.5-3-3-3-3S16 2 12.5 2z"/></svg>
+        Linux
+      </button>
+    </div>
+
+    <!-- Windows -->
+    <div class="install-panel" data-os="win">
+      <div class="install-tip">
+        <strong>Antes de copiar:</strong> verifique se há espaço suficiente no computador. O backup ocupa o mesmo tamanho que os arquivos no pendrive. Abra o Explorador de Arquivos e veja o espaço livre no disco <em>C:</em>.
+      </div>
+      <ol class="install-steps">
+        <li>Abra o <strong>Explorador de Arquivos</strong> (pasta amarela na barra de tarefas)</li>
+        <li>No painel esquerdo, clique no nome do <strong>pendrive</strong> para abrir apenas ele</li>
+        <li>Selecione <strong>todos os arquivos e pastas</strong> dentro do pendrive (Ctrl+A)</li>
+        <li>Copie (Ctrl+C)</li>
+        <li>Abra a pasta <em>Documentos</em>. Se já existir uma pasta <em>Backup WhatsApp</em> lá, <strong>apague-a primeiro</strong> para não sobrar arquivos antigos. Depois crie a pasta novamente e cole (Ctrl+V) — <strong>não cole diretamente na área de trabalho</strong>, pois o backup pode ter vários GB</li>
+        <li>Quando terminar de copiar, entre na pasta e clique duas vezes em <strong>index.html</strong></li>
+        <li>Para criar um atalho na área de trabalho: clique com o botão direito em <em>index.html</em> → <em>Enviar para</em> → <em>Área de trabalho (criar atalho)</em></li>
+      </ol>
+      <details class="install-advanced">
+        <summary>Opção avançada: instalar automaticamente com script</summary>
+        <div class="install-advanced-body">
+          <p class="install-adv-warn">
+            <strong>Atenção:</strong> por ser um arquivo baixado, o Windows pode bloqueá-lo. Antes de executar: clique com o botão direito no arquivo baixado → <em>Propriedades</em> → marque <em>Desbloquear</em> → <em>OK</em>. Só então dê dois cliques para rodar.<br><br>
+            O script copia apenas os arquivos do backup (não o pendrive inteiro), verifica o espaço em disco e cria o atalho automaticamente.
+          </p>
+          <button id="installWin" class="install-os-btn">
+            <svg viewBox="0 0 24 24" width="18" height="18"><path fill="currentColor" d="M19 9h-4V3H9v6H5l7 7 7-7zm-8 2V5h2v6h1.17L12 13.17 9.83 11H11zm-6 8v2h14v-2H5z"/></svg>
+            Baixar script Windows (.bat)
+          </button>
+        </div>
+      </details>
+    </div>
+
+    <!-- macOS -->
+    <div class="install-panel" data-os="mac" hidden>
+      <div class="install-tip">
+        <strong>Antes de copiar:</strong> verifique se há espaço suficiente. Clique na maçã () → <em>Sobre este Mac</em> → <em>Armazenamento</em> para ver o espaço livre.
+      </div>
+      <ol class="install-steps">
+        <li>Abra o <strong>Finder</strong> (ícone de rosto sorridente no Dock)</li>
+        <li>No painel esquerdo, clique no nome do <strong>pendrive</strong></li>
+        <li>Selecione todos os arquivos (Cmd+A) e copie (Cmd+C)</li>
+        <li>No Finder, acesse <em>Documentos</em>. Se já existir uma pasta <em>Backup WhatsApp</em> lá, <strong>apague-a primeiro</strong> (arraste para a lixeira) para não sobrar arquivos antigos. Depois crie a pasta novamente e cole (Cmd+V) — <strong>não cole na área de trabalho</strong>, pois o backup pode ter vários GB</li>
+        <li>Quando terminar, abra a pasta e dê dois cliques em <strong>index.html</strong></li>
+        <li>Para criar um atalho: no Finder, segure <strong>Cmd+Alt</strong> e arraste o <em>index.html</em> para a área de trabalho</li>
+      </ol>
+      <details class="install-advanced">
+        <summary>Opção avançada: instalar automaticamente com script</summary>
+        <div class="install-advanced-body">
+          <p class="install-adv-warn">
+            <strong>Atenção:</strong> é necessário abrir o Terminal.<br>
+            Abra o Terminal (Launchpad → busque "Terminal"), arraste o arquivo baixado para a janela do Terminal e pressione Enter.<br><br>
+            O script copia apenas os arquivos do backup, verifica o espaço em disco e cria o atalho automaticamente.
+          </p>
+          <button id="installMac" class="install-os-btn">
+            <svg viewBox="0 0 24 24" width="18" height="18"><path fill="currentColor" d="M19 9h-4V3H9v6H5l7 7 7-7zm-8 2V5h2v6h1.17L12 13.17 9.83 11H11zm-6 8v2h14v-2H5z"/></svg>
+            Baixar script macOS (.sh)
+          </button>
+        </div>
+      </details>
+    </div>
+
+    <!-- Linux -->
+    <div class="install-panel" data-os="linux" hidden>
+      <div class="install-tip">
+        <strong>Antes de copiar:</strong> verifique o espaço livre no disco. No gerenciador de arquivos, clique com o botão direito na pasta <em>Home</em> → <em>Propriedades</em> para ver o espaço disponível.
+      </div>
+      <ol class="install-steps">
+        <li>Abra o <strong>gerenciador de arquivos</strong> (ex.: Nautilus, Dolphin, Thunar)</li>
+        <li>No painel esquerdo, clique no nome do <strong>pendrive</strong></li>
+        <li>Selecione todos os arquivos (Ctrl+A) e copie (Ctrl+C)</li>
+        <li>Navegue até <em>Documentos</em>. Se já existir uma pasta <em>Backup WhatsApp</em> lá, <strong>apague-a primeiro</strong> para não sobrar arquivos antigos. Depois crie a pasta novamente e cole (Ctrl+V) — <strong>não cole na área de trabalho</strong>, pois o backup pode ter vários GB</li>
+        <li>Quando terminar, abra a pasta e dê dois cliques em <strong>index.html</strong></li>
+        <li>Para criar um atalho: clique com o botão direito em <em>index.html</em> → <em>Criar link</em> ou <em>Enviar para área de trabalho</em></li>
+      </ol>
+      <details class="install-advanced">
+        <summary>Opção avançada: instalar automaticamente com script</summary>
+        <div class="install-advanced-body">
+          <p class="install-adv-warn">
+            <strong>Atenção:</strong> é necessário abrir um terminal.<br>
+            Abra o terminal, navegue até a pasta do pendrive e execute:<br>
+            <code>bash instalar-backup-whatsapp.sh</code><br><br>
+            O script copia apenas os arquivos do backup, verifica o espaço em disco e cria o atalho automaticamente.
+          </p>
+          <button id="installLinux" class="install-os-btn">
+            <svg viewBox="0 0 24 24" width="18" height="18"><path fill="currentColor" d="M19 9h-4V3H9v6H5l7 7 7-7zm-8 2V5h2v6h1.17L12 13.17 9.83 11H11zm-6 8v2h14v-2H5z"/></svg>
+            Baixar script Linux (.sh)
+          </button>
+        </div>
+      </details>
+    </div>
+
+    <div class="modal-foot">
+      <button id="installCancel" class="btn-ghost">Fechar</button>
+    </div>
+  </div>
+</div>
+
+<div id="lightbox" hidden>
+  <button id="lbClose" class="lb-btn lb-close" aria-label="Fechar">&#10005;</button>
+  <button id="lbPrev" class="lb-btn lb-prev" aria-label="Anterior">&#10094;</button>
+  <button id="lbNext" class="lb-btn lb-next" aria-label="Próxima">&#10095;</button>
+  <img id="lbImg" alt="">
+  <div id="lbCap"></div>
+</div>
+
+<script src="data/chats.js"></script>
+<script src="app.js"></script>
+</body>
+</html>

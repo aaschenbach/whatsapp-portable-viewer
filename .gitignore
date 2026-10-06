@@ -1,0 +1,41 @@
+# Python
+__pycache__/
+*.py[oc]
+build/
+dist/
+wheels/
+*.egg-info
+.pytest_cache/
+.ruff_cache/
+
+# Ambientes virtuais
+.venv
+
+# Dados privados do backup (NUNCA versionar)
+msgstore.db*
+wa.db*
+*.crypt12
+*.crypt14
+*.crypt15
+*.mcrypt1
+encrypted_backup.key
+key
+*.vcf
+contatos.csv
+contatos.*.csv
+Media/
+pendrive/
+logs/
+imagem*chave*
+*chave*.jpg
+*chave*.png
+
+# Saídas geradas da demonstração (o gerador é versionado, o resultado não)
+demo/saida/
+
+# Arquivos de instrução de agentes (contêm instruções privadas do ambiente)
+CLAUDE.md
+AGENTS.md
+
+# Pastas de mídia real (nunca versionar)
+MediaAnterior/
